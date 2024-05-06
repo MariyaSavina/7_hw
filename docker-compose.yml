@@ -1,0 +1,23 @@
+---
+version: '3'
+services:
+    dev:
+        build:
+            context: ./dev
+            dockerfile: dev.Dockerfile
+        volumes:
+            - 'data-volume:/tmp/boxfuse/boxfuse-sample-java-war-hello/target'
+
+    prod:
+        build:
+            context: ./prod
+            dockerfile: prod.Dockerfile
+        ports:
+            - '8080:8080'
+        depends_on:
+            - dev
+        volumes:
+            - 'data-volume:/opt/tomcat/webapps'
+volumes:
+    data-volume:
+...
